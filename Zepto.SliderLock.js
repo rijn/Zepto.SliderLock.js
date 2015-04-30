@@ -69,7 +69,9 @@
 
         },
         moveHandler = function(e, obj) {
+
             e.preventDefault();
+
             var x = e.pageX || e.touches[0].pageX,
                 iObj = objectHolder[obj.token],
                 option = iObj.option,
@@ -77,13 +79,24 @@
                 posObj = iObj.refreshDistance(x),
                 distance = posObj.distance;
 
-            if (distance) {
-                distance = distance < option.barMargin ? option.barMargin : distance;
-                distance = distance < maxDistance ? distance : maxDistance;
-                iObj.bar.css({
-                    'margin-left': distance + "px"
-                })
-            }
+            if (!iObj.disabled) {
+                if (distance) {
+                    distance = distance < option.barMargin ? option.barMargin : distance;
+                    distance = distance < maxDistance ? distance : maxDistance;
+
+                    if (!!option.magnet) {
+                        if (maxDistance - distance < option.triggerDistance) {
+                            distance = maxDistance;
+                            iObj.option.trigger();
+                        };
+                    };
+
+                    iObj.bar.css({
+                        'margin-left': distance + "px"
+                    });
+                };
+            };
+
         },
         endHandler = function(e, obj) {
             e.preventDefault();
@@ -94,14 +107,19 @@
                 posObj = iObj.getDistance(),
                 distance = posObj.distance;
 
+            iObj.holder.off('.bar-move');
+
+            if (maxDistance - distance < option.triggerDistance) {
+                iObj.option.arrival();
+            };
+
             iObj.bar.css({
                 "margin-left": option.barMargin + "px"
             });
 
-            console.log(distance);
-            iObj.holder.off('.bar-move');
-            //iObj.option.onDraw(pattern);
-
+            if (maxDistance - distance > option.triggerDistance) {
+                iObj.option.failed();
+            };
         };
 
     /* Slider class */
@@ -146,6 +164,10 @@
         //change offset property of holder if it does not have any property
         if (holder.css('position') == "static") holder.css('position', 'relative');
 
+        iObj.option.trigger = option.trigger || nullFunc;
+        iObj.option.arrival = option.arrival || nullFunc;
+        iObj.option.failed = option.failed || nullFunc;
+
         //assign event
         holder.on("touchstart mousedown", function(e) {
             startHandler.call(this, e, self);
@@ -171,10 +193,12 @@
             }
         },
         enable: function() {
-
+            var iObj = objectHolder[this.token];
+            iObj.disabled = false;
         },
         disable: function() {
-
+            var iObj = objectHolder[this.token];
+            iObj.disabled = true;
         },
     };
 
@@ -185,7 +209,9 @@
         containerHeight: 40,
         containerWidth: 200,
         barWidth: 50,
-        barMargin: 3
+        barMargin: 3,
+        triggerDistance: 30,
+        magnet: true
     };
 
     window.SliderLock = SliderLock;

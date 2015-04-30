@@ -18,6 +18,12 @@
     var slider = new SliderLock("#container", {
         init: function() {
             console.log("init");
+        },
+        failed: function() {
+            alert("failed");
+        },
+        arrival: function() {
+            alert("arrival");
         }
     })
     </script>
