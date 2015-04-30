@@ -56,7 +56,7 @@ sliderlock.disable();
 
 ## Subscribe
 
-After subscribing, the function will be called if the event happens.
+After subscribing, the function will be called when the event happens.
 
 ### init
 
