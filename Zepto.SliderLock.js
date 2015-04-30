@@ -15,29 +15,114 @@
     function readyDom(iObj) {
         var holder = iObj.holder,
             option = iObj.option,
-            color = option.matrix,
-            secondaryColor = option.margin,
-            radius = option.margin,
+            color = option.color,
+            secondaryColor = option.secondaryColor,
+            radius = option.radius,
             containerHeight = option.containerHeight,
             containerWidth = option.containerWidth,
             barWidth = option.barWidth,
-            html = "";
+            barMargin = option.barMargin,
+            html = '<div class="zepto-sliderlock"><div class="zepto-sliderlock-bar"></div></div>';
 
-        console.log(option);
+        holder.html(html).children('.zepto-sliderlock').css({
+            'width': (containerWidth || 0) + 'px',
+            'height': (containerHeight || 0) + 'px',
+            'background': (color || "#ffffff"),
+            'border-radius': (radius || 0) + 'px',
+            'position': 'relative'
+        }).children('.zepto-sliderlock-bar').css({
+            'height': (containerHeight - barMargin * 2) + 'px',
+            'width': (barWidth || 0) + 'px',
+            'background': (secondaryColor || "#ffffff"),
+            'border-radius': (radius || 0) + 'px',
+            'margin': (barMargin || 0) + 'px',
+            'position': 'absolute'
+        });
 
+        iObj.bar = iObj.holder.find('.zepto-sliderlock-bar').first();
+
+        return;
     }
+
+
+    var startHandler = function(e, obj) {
+            e.preventDefault();
+            var iObj = objectHolder[obj.token];
+
+            if (iObj.disabled) return;
+
+            var touchMove = e.type == "touchstart" ? "touchmove" : "mousemove",
+                touchEnd = e.type == "touchstart" ? "touchend" : "mouseup";
+
+            iObj.startPoint(e.pageX || e.touches[0].pageX);
+
+            //assign events
+            $(this).on(touchMove + '.bar-move', function(e) {
+                moveHandler.call(this, e, obj);
+            });
+            $(document).one(touchEnd, function() {
+                endHandler.call(this, e, obj);
+            });
+
+            //reset pattern
+            //obj.reset();
+
+        },
+        moveHandler = function(e, obj) {
+            e.preventDefault();
+            var x = e.pageX || e.touches[0].pageX,
+                iObj = objectHolder[obj.token],
+                option = iObj.option,
+                maxDistance = option.containerWidth - option.barMargin - option.barWidth,
+                posObj = iObj.refreshDistance(x),
+                distance = posObj.distance;
+
+            if (distance) {
+                distance = distance < option.barMargin ? option.barMargin : distance;
+                distance = distance < maxDistance ? distance : maxDistance;
+                iObj.bar.css({
+                    'margin-left': distance + "px"
+                })
+            }
+        },
+        endHandler = function(e, obj) {
+            e.preventDefault();
+            var x = e.pageX || e.touches[0].pageX,
+                iObj = objectHolder[obj.token],
+                option = iObj.option,
+                maxDistance = option.containerWidth - option.barMargin - option.barWidth,
+                posObj = iObj.getDistance(),
+                distance = posObj.distance;
+
+            iObj.bar.css({
+                "margin-left": option.barMargin + "px"
+            });
+
+            console.log(distance);
+            iObj.holder.off('.bar-move');
+            //iObj.option.onDraw(pattern);
+
+        };
 
     /* Slider class */
     function Slider() {}
 
     Slider.prototype = {
         constructor: Slider,
-        getDistance: function(x) {
+        startPoint: function(x) {
+            this.start = x;
+        },
+        refreshDistance: function(x) {
             var option = this.option,
-                distance = x - this.wrapLeft;
-
+                distance = x - this.start;
+            this.distance = distance;
             return {
                 distance: distance
+            };
+        },
+        getDistance: function() {
+            return {
+                distance: this.distance
             };
         }
     };
@@ -57,6 +142,14 @@
         readyDom(iObj);
 
         iObj.option.init = (option.init || nullFunc)();
+
+        //change offset property of holder if it does not have any property
+        if (holder.css('position') == "static") holder.css('position', 'relative');
+
+        //assign event
+        holder.on("touchstart mousedown", function(e) {
+            startHandler.call(this, e, self);
+        });
     };
 
     SliderLock.prototype = {
@@ -86,12 +179,13 @@
     };
 
     SliderLock.defaults = {
-        color: '#64bd63',
-        secondaryColor: '#dfdfdf',
-        radius: '10px',
-        containerHeight: '10px',
-        containerWidth: '100px',
-        barWidth: '20px'
+        color: '#dfdfdf',
+        secondaryColor: '#64bd63',
+        radius: 10,
+        containerHeight: 40,
+        containerWidth: 200,
+        barWidth: 50,
+        barMargin: 3
     };
 
     window.SliderLock = SliderLock;
