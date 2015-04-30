@@ -33,15 +33,15 @@ defaults = {
 };
 ```
 
-* color: color of the container.
-* secondaryColor: color of the slider bar.
-* radius: radius of the container and the bar.
-* containerHeight: the height of the container.
-* containerWidth: the width of the container.
-* barWidth: the width of the slider bar.
-* barMargin: margin of the slider bar. (barHeight + barMargin * 2 == containerHeight)
-* triggerDistance: if the distance is close to the arrival, it will return true.
-* magnet: the bar will attach to the arrival if the option is true.
+* `color`: color of the container.
+* `secondaryColor`: color of the slider bar.
+* `radius`: radius of the container and the bar.
+* `containerHeight`: the height of the container.
+* `containerWidth`: the width of the container.
+* `barWidth`: the width of the slider bar.
+* `barMargin`: margin of the slider bar. (barHeight + barMargin * 2 == containerHeight)
+* `triggerDistance`: if the distance is close to the arrival, it will return true.
+* `magnet`: the bar will attach to the arrival if the option is true.
 
 ## Methods
 
