@@ -11,7 +11,7 @@ Include Zepto and Zepto.SliderLock.js to your page.
 <script src="Zepto.SliderLock.js"></script>
 ```
 
-Than with simple initialization you have your pattern lock.
+Than with simple initialization you have your slider lock.
 
 ```
 var sliderlock = new SliderLock("#sliderContainer");
