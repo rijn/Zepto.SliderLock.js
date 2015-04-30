@@ -63,10 +63,6 @@
             $(document).one(touchEnd, function() {
                 endHandler.call(this, e, obj);
             });
-
-            //reset pattern
-            //obj.reset();
-
         },
         moveHandler = function(e, obj) {
 
