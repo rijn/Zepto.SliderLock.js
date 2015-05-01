@@ -58,7 +58,7 @@ sliderlock.disable();
 
 ### reset
 
-Reset the slider lock will make the bar go back and ignore drag event until next touch.
+Reset the slider lock will make the bar locked and ignore drag event until next touch.
 
 ```
 sliderlock.reset();
