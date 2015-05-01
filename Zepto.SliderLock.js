@@ -83,13 +83,26 @@
                     if (!!option.magnet) {
                         if (maxDistance - distance < option.triggerDistance) {
                             distance = maxDistance;
-                            iObj.option.arrival();
                         };
                     };
 
                     iObj.bar.css({
                         'margin-left': distance + "px"
                     });
+
+
+                    if (!!option.magnet) {
+                        if (maxDistance - distance < option.triggerDistance) {
+                            iObj.disabled = true;
+                            iObj.option.arrival();
+                            setTimeout(
+                                function() {
+                                    iObj.disabled = false;
+                                },
+                                0
+                            );
+                        };
+                    };
                 };
             };
 
@@ -155,11 +168,10 @@
 
         readyDom(iObj);
 
-        iObj.option.init = (option.init || nullFunc)();
-
         //change offset property of holder if it does not have any property
         if (holder.css('position') == "static") holder.css('position', 'relative');
 
+        iObj.option.init = (option.init || nullFunc)();
         iObj.option.arrival = option.arrival || nullFunc;
         iObj.option.succeed = option.succeed || nullFunc;
         iObj.option.failed = option.failed || nullFunc;
@@ -195,6 +207,10 @@
         disable: function() {
             var iObj = objectHolder[this.token];
             iObj.disabled = true;
+        },
+        lock: function() {
+            var iObj = objectHolder[this.token];
+            iObj.holder.off('.bar-move');
         },
         reset: function() {
             var iObj = objectHolder[this.token];

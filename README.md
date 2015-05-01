@@ -56,9 +56,19 @@ sliderlock.enable();
 sliderlock.disable();
 ```
 
-### reset
+### lock
+Lock the slider lock will make the bar locked and ignore drag event until next touch.
 
-Reset the slider lock will make the bar locked and ignore drag event until next touch.
+```
+var sliderlock = new SliderLock("#sliderContainer", {
+    arrival: function() {
+        sliderlock.lock();
+    }
+});
+```
+
+### reset
+Reset the slider lock will make the bar go back.
 
 ```
 sliderlock.reset();
