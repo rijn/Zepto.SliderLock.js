@@ -70,7 +70,7 @@ var sliderlock = new SliderLock("#sliderContainer", {
     });
 ```
 
-### trigger
+### arrival
 
 The function will be called when the bar firstly be dragged to the arrival.
 
@@ -80,7 +80,7 @@ sliderlock.trigger = function() {
 };
 ```
 
-### arrival
+### succeed
 
 The function will be called when the bar be released at the arrival.
 
