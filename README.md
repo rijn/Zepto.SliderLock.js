@@ -85,7 +85,7 @@ var sliderlock = new SliderLock("#sliderContainer", {
 The function will be called when the bar firstly be dragged to the arrival.
 
 ```
-sliderlock.trigger = function() {
+sliderlock.arrival = function() {
     console.log("The bar was dragged to the arrival firstly.");
 };
 ```
@@ -96,7 +96,7 @@ The function will be called when the bar be released at the arrival.
 
 ```
 var sliderlock = new SliderLock("#sliderContainer", {
-    arrival: function() {
+    succeed: function() {
             console.log("do something...");
         },
     });
