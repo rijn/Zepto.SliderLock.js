@@ -29,7 +29,6 @@
             'height': (containerHeight || 0) + 'px',
             'background': (color || "#ffffff"),
             'border-radius': (radius || 0) + 'px',
-            'border': (option.border || ""),
             'position': 'relative'
         }).children('.zepto-sliderlock-bar').css({
             'height': (containerHeight - barMargin * 2) + 'px',
@@ -213,7 +212,6 @@
         radius: 10,
         containerHeight: 40,
         containerWidth: 200,
-        border: "solid 1px #f5f5f5",
         barWidth: 50,
         barMargin: 3,
         triggerDistance: 30,

@@ -2,6 +2,8 @@
 
 Slider Lock is a light weight plugin to simulate slider lock mechanism for you hybrid app or for a website.
 
+Check demo and documentation on [http://pixelnfinite.com/Zepto.SliderLock.js/](http://pixelnfinite.com/Zepto.SliderLock.js/)
+
 ## Quick start
 
 Include Zepto and Zepto.SliderLock.js to your page.
@@ -45,13 +47,21 @@ defaults = {
 
 ## Methods
 
-### Enable && Disable
+### enable && disable
 
 Use the method to make your slider lock active or inactive.
 
 ```
 sliderlock.enable();
 sliderlock.disable();
+```
+
+### reset
+
+Reset the slider lock will make the bar go back and ignore drag event until next touch.
+
+```
+sliderlock.reset();
 ```
 
 ## Subscribe
