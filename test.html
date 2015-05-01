@@ -14,18 +14,20 @@
     <div id="containerA"></div>
     <br/>
     <div id="containerB"></div>
+    <br/>
+    <div id="containerC"></div>
     <script src="./zepto.min.js"></script>
     <script src="./Zepto.SliderLock.js"></script>
     <script>
     var slider = new SliderLock("#containerA", {
+        radius: 0,
+        barMargin: 0,
         init: function() {
             console.log("init");
         },
-        failed: function() {
-            alert("A failed");
-        },
-        arrival: function() {
-            alert("A arrival");
+        failed: function() {},
+        succeed: function() {
+            alert("A succeed");
         }
     });
     var slider = new SliderLock("#containerB", {
@@ -40,6 +42,17 @@
         },
         arrival: function() {
             alert("B arrival");
+        }
+    });
+    var slider = new SliderLock("#containerC", {
+        secondaryColor: "#7bbfea",
+        radius: 50,
+        barWidth: 35,
+        init: function() {
+            console.log("init");
+        },
+        arrival: function() {
+            slider.reset();
         }
     });
     slider.enable();

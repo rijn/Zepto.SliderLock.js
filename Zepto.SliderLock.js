@@ -29,6 +29,7 @@
             'height': (containerHeight || 0) + 'px',
             'background': (color || "#ffffff"),
             'border-radius': (radius || 0) + 'px',
+            'border': (option.border || ""),
             'position': 'relative'
         }).children('.zepto-sliderlock-bar').css({
             'height': (containerHeight - barMargin * 2) + 'px',
@@ -83,7 +84,7 @@
                     if (!!option.magnet) {
                         if (maxDistance - distance < option.triggerDistance) {
                             distance = maxDistance;
-                            iObj.option.trigger();
+                            iObj.option.arrival();
                         };
                     };
 
@@ -106,7 +107,7 @@
             iObj.holder.off('.bar-move');
 
             if (maxDistance - distance < option.triggerDistance) {
-                iObj.option.arrival();
+                iObj.option.succeed();
             };
 
             iObj.bar.css({
@@ -160,8 +161,8 @@
         //change offset property of holder if it does not have any property
         if (holder.css('position') == "static") holder.css('position', 'relative');
 
-        iObj.option.trigger = option.trigger || nullFunc;
         iObj.option.arrival = option.arrival || nullFunc;
+        iObj.option.succeed = option.succeed || nullFunc;
         iObj.option.failed = option.failed || nullFunc;
 
         //assign event
@@ -196,6 +197,14 @@
             var iObj = objectHolder[this.token];
             iObj.disabled = true;
         },
+        reset: function() {
+            var iObj = objectHolder[this.token];
+            iObj.holder.off('.bar-move');
+
+            iObj.bar.css({
+                "margin-left": iObj.option.barMargin + "px"
+            });
+        }
     };
 
     SliderLock.defaults = {
@@ -204,6 +213,7 @@
         radius: 10,
         containerHeight: 40,
         containerWidth: 200,
+        border: "solid 1px #f5f5f5",
         barWidth: 50,
         barMargin: 3,
         triggerDistance: 30,
