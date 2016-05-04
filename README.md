@@ -2,7 +2,7 @@
 
 Slider Lock is a light weight plugin to simulate slider lock mechanism for you hybrid app or for a website.
 
-Check demo and documentation on [http://pixelnfinite.com/Zepto.SliderLock.js/](http://pixelnfinite.com/Zepto.SliderLock.js/)
+Check demo and documentation on [http://lab.rijnx.com/Zepto.SliderLock.js/](http://lab.rijnx.com/Zepto.SliderLock.js/)
 
 ## Quick start
 
